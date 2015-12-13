@@ -37,14 +37,14 @@ function dtw(seq1::Vector, seq2::Vector, distance::Function=Distance.square)
     end
 
     trackcols, trackrows = trackback(cost)
-    cost[end,end], trackcols, trackrows
+    cost[end,end], trackcols, trackrows, cost
 end
 
 
 # Compute the optimal track backwards through the cost matrix from end to beginning.
 # Return (columns, rows) of the optimal track.
 
-function trackback(D)
+function trackback(D::Matrix)
     r,c = size(D)
     rows,cols = [r],[c]
     while r > 1 && c > 1
@@ -378,6 +378,7 @@ export
 dtw,
 dtwwindowed,
 fastdtw,
-dtwbaryavg
+dtwbaryavg,
+trackback
 
 end # module
