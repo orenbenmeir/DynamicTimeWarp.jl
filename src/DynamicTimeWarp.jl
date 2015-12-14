@@ -35,6 +35,7 @@ function dtw_matrix(seq1::Vector, seq2::Vector, distance::Function=Distance.squa
         end
     end
 
+    return cost
 end
 
 function dtw(seq1::Vector, seq2::Vector, distance::Function=Distance.square)
