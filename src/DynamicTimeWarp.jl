@@ -11,8 +11,7 @@ include("WindowedMatrix.jl")
 
 # Dynamic Time Warping with a user-specified distance function
 
-function dtw(seq1::Vector, seq2::Vector, distance::Function=Distance.square)
-
+function dtw_matrix(seq1::Vector, seq2::Vector, distance::Function=Distance.square)
     # Build the cost matrix
     const m=length(seq2)
     const n=length(seq1)
@@ -35,6 +34,11 @@ function dtw(seq1::Vector, seq2::Vector, distance::Function=Distance.square)
             cost[r,c] = best_neighbor_cost + distance(seq1[c], seq2[r])
         end
     end
+
+end
+
+function dtw(seq1::Vector, seq2::Vector, distance::Function=Distance.square)
+    cost = dtw_matrix(seq1, seq2, distance)
 
     trackcols, trackrows = trackback(cost)
     cost[end,end], trackcols, trackrows, cost
@@ -376,6 +380,7 @@ end # module Distance
 
 export
 dtw,
+dtw_matrix,
 dtwwindowed,
 fastdtw,
 dtwbaryavg,
