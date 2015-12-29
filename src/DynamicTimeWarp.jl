@@ -11,7 +11,7 @@ include("WindowedMatrix.jl")
 
 # Dynamic Time Warping with a user-specified distance function
 
-function dtw_matrix(seq1::Vector, seq2::Vector, distance::Function=Distance.square)
+function dtw_matrix(seq1::Vector, seq2::Vector, distance::Function=Distance.square, alpha::Bool=true, beta::Bool=true)
     # Build the cost matrix
     const m=length(seq2)
     const n=length(seq1)
@@ -21,10 +21,10 @@ function dtw_matrix(seq1::Vector, seq2::Vector, distance::Function=Distance.squa
     # Initialize first column and first row
     cost[1,1] = cost11
     for r=2:m
-        cost[r,1] = cost[r-1,1] + distance(seq1[1], seq2[r])
+        cost[r,1] = alpha*cost[r-1,1] + distance(seq1[1], seq2[r])
     end
     for c=2:n
-        cost[1,c] = cost[1,c-1] + distance(seq1[c], seq2[1])
+        cost[1,c] = beta*cost[1,c-1] + distance(seq1[c], seq2[1])
     end
 
     # Complete the cost matrix
@@ -49,8 +49,13 @@ end
 # Compute the optimal track backwards through the cost matrix from end to beginning.
 # Return (columns, rows) of the optimal track.
 
-function trackback(D::Matrix)
-    r,c = size(D)
+function trackback(D::Matrix, r::Int=0, c::Int=0)
+    if 0 == r 
+        r = size(D,1)
+    end
+    if 0 == c 
+        c = size(D,2)
+    end
     rows,cols = [r],[c]
     while r > 1 && c > 1
         tb = indmin([D[r-1,c-1], D[r-1,c], D[r,c-1]])
