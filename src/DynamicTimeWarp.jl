@@ -4,9 +4,9 @@
 # December 2014 - February 2015
 #
 
-using Compat
 
 module DynamicTimeWarp
+using Compat
 
 include("WindowedMatrix.jl")
 
