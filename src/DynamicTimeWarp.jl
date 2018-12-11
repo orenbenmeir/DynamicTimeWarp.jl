@@ -4,6 +4,8 @@
 # December 2014 - February 2015
 #
 
+using Compat
+
 module DynamicTimeWarp
 
 include("WindowedMatrix.jl")
@@ -58,7 +60,7 @@ function trackback(D::Matrix, r::Int=0, c::Int=0)
     end
     rows,cols = [r],[c]
     while r > 1 && c > 1
-        tb = indmin([D[r-1,c-1], D[r-1,c], D[r,c-1]])
+        @compat tb = argmin([D[r-1,c-1], D[r-1,c], D[r,c-1]])
         tb in [1,2] && (r-=1)
         tb in [1,3] && (c-=1)
         push!(rows,r)
