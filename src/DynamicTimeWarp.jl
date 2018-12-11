@@ -280,7 +280,7 @@ function dtwspeedtest(N::Integer, functype=1)
             cols[i] = c
         end
         t = linspace(0, N, max(r[end],c[end]))
-        f = sin((N-t).^0.7)+ (t.*(3./N))
+        f = sin((N-t).^0.7)+ (t.*(3.0 / N))
         x = f[rows]
         y = f[cols]
     end
