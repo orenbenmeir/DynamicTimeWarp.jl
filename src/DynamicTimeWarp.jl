@@ -13,8 +13,8 @@ include("WindowedMatrix.jl")
 
 function dtw_matrix(seq1::Vector, seq2::Vector, distance::Function=Distance.square, alpha::Bool=true, beta::Bool=true)
     # Build the cost matrix
-    const m=length(seq2)
-    const n=length(seq1)
+    m=length(seq2)
+    n=length(seq1)
     cost11 = distance(seq1[1], seq2[1])
     cost = zeros(typeof(cost11), m, n)
 
@@ -84,9 +84,9 @@ end
 
 function fastdtw(seq1::Vector, seq2::Vector, radius::Integer, 
                  distance::Function=Distance.square)
-    const MinSize = max(radius + 2, 10)
-    const N1 = length(seq1)
-    const N2 = length(seq2)
+    MinSize = max(radius + 2, 10)
+    N1 = length(seq1)
+    N2 = length(seq2)
     if N1 <= MinSize || N2 <= MinSize
         return (dtw(seq1, seq2, distance))
     end
@@ -111,7 +111,7 @@ end
 function expandpath(lowrescol, lowresrow, Ncol, Nrow)
     @assert div(Ncol+1,2) == lowrescol[end]
     @assert div(Nrow+1,2) == lowresrow[end]
-    const Np = length(lowrescol)
+    Np = length(lowrescol)
     @assert Np == length(lowresrow)
 
     hirescol = zeros(eltype(lowrescol), 2*Np)
@@ -162,10 +162,10 @@ end
 # for each column, the minimum and maximum row numbers used in that column.
 
 function computewindow(pathcols, pathrows, radius)
-    const Np = length(pathcols)
+    Np = length(pathcols)
     @assert Np == length(pathrows)
-    const Ncol = pathcols[end]
-    const Nrow = pathrows[end]
+    Ncol = pathcols[end]
+    Nrow = pathrows[end]
 
     # Find the min/max row at each column in the path.
     pathmin = zeros(Int, Ncol)
@@ -209,8 +209,8 @@ function dtwwindowed(seq1::Vector, seq2::Vector,
                      idx2min::Vector, idx2max::Vector,
                      distance::Function=Distance.square)
 
-    const m=length(seq2) # of rows  in cost matrix
-    const n=length(seq1) # of columns in cost matrix
+    m=length(seq2) # of rows  in cost matrix
+    n=length(seq1) # of columns in cost matrix
     @assert n==length(idx2min)
     @assert n==length(idx2max)
     @assert 1==minimum(idx2min)
@@ -266,7 +266,7 @@ function dtwspeedtest(N::Integer, functype=1)
         rows=Array(Int, N)
         cols=Array(Int, N)
         r=c=1
-        const PSTRETCH=0.8
+        PSTRETCH=0.8
         for i=1:N
             rnum = rand()
             if rnum > PSTRETCH # go diag
@@ -325,7 +325,7 @@ end
 
 #function dtwbaryavg_iteration(dbavg::Vector, sequences::Array{Array{1},1})
 function dtwbaryavg_iteration(dbavg::Vector, sequences::Array)
-    const Nseq = length(sequences)
+    Nseq = length(sequences)
     count = zeros(Int, length(dbavg))
     sumcoords = zeros(Float64, length(dbavg))
     
