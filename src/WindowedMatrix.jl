@@ -12,7 +12,7 @@
 # December 2014
 #
 
-immutable WindowedMatrix{T<:Real} <: AbstractArray{T,2}
+struct WindowedMatrix{T<:Real} <: AbstractArray{T,2}
     nrow::Int
     ncol::Int
     ncells::Int
