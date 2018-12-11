@@ -24,8 +24,8 @@ struct WindowedMatrix{T<:Real} <: AbstractArray{T,2}
     idxcol::Vector{Int}  # Index (in cost) of 1st element in each column
     defaultval::T
 
-    function WindowedMatrix{T}(rmin::Vector{Int}, rmax::Vector{Int},
-                               default::T)
+    function WindowedMatrix(rmin::Vector{Int}, rmax::Vector{Int},
+                               default::T) where {T}
         rowmin = copy(rmin)
         rowmax = copy(rmax)
         rowspercol = rowmax-rowmin+1
@@ -35,7 +35,7 @@ struct WindowedMatrix{T<:Real} <: AbstractArray{T,2}
         cost = zeros(T, ncells)
         idxcol = 1+vcat([0],cumsum(rowspercol[1:end-1])) # index of 1st element per column
 
-        new(nrow, ncol, ncells, cost, rowmin, rowmax, rowspercol, idxcol, default)
+        new{T}(nrow, ncol, ncells, cost, rowmin, rowmax, rowspercol, idxcol, default)
     end
 end
 
